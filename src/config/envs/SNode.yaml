@@ -1,0 +1,78 @@
+# 这是一个 yaml 配置文件，存储环境的配置参数
+# 参考教程：https://zhuanlan.zhihu.com/p/145173920
+env: SNode
+
+env_args:
+  algo_name: "TPRA"  # 算法名称
+  env_name: "UAV-assisted IoT-Sensor Networks"  # 环境名称
+  map_name: "formation"
+  luav_num: 1
+  fuav_num: 5
+  map_length: 10 # 地图长度
+  map_width: 10  # 地图宽度
+  connect_dis: 5  #无人机覆盖半径Rcov
+  slot_step_num: 7 # 时隙长度（大时间尺度的slot有多少个frame）
+  episode_limit: 8
+
+  seed: 10  # 随机种子，置0则不设置随机种子
+  train_rounds: 10  # 训练的回合数
+  train_round_eps: 10000  # 每个训练回合的训练次数
+  test_eps: 30  # 测试的回合数
+
+  normalize_energy: 30.0
+
+  sn_num: 20
+  sn_pos_list: [
+    [ 4,4 ],[ 4,0 ],[ 4,2 ],
+    [ 2,2 ],[ 2,3 ],[ 2,4 ],
+    [ 0,4 ],[ 0,1 ],
+    [ 1,4 ],[ 1,0 ],[ 1,2 ],
+    [ 3,4 ],[ 3,0 ],[ 3,2 ],
+    [ 5,4 ],[ 5,5 ],[ 5,2 ],
+    [ 6,4 ],[ 6,3 ],[ 6,2 ],
+  ]
+  sn_threshold: 0.5
+
+  pointer_match: True
+  
+  luav_init_pos_list: [ [ 1,1 ] ]
+  fuav_init_pos_list: [
+    [ 4,4 ],[ 4,0 ],
+    [ 2,2 ],[ 2,4 ],
+    [ 0,4 ]
+  ]
+  MAX_ITERATIONS: 100
+
+  collect_speed: 7 # 传输速率R
+  step_time: 1  # 时隙T
+  h: 4 # 高度
+  # luav_observation_size: 5
+  # fuav_observation_size: 1
+  # fuav_nei_dis: 1
+
+  fuav_init_energy: 150.0
+  flight_cost: 0.5 # 飞行能耗∆Ekn,p = PvTf  常数项
+  flight_c_1: 0.5  # 一次项系数
+  flight_c_2: 0.01
+  flight_c_3: 0.005
+
+  hover_cost: 0.5 # 悬停能耗∆Ekn,p = P0Tc
+  transmit_cost: 0.5 # 传输能耗∆Ekn,t = PcTc
+
+  # 领航无人机
+  lagent_state_size: 10  # 状态维度
+  lagent_obs_size: 10  # 观测维度
+  lagent_act_dim: 0  # 动作空间大小
+
+  # 跟随无人机
+  fagent_state_size: 10  # 状态维度
+  fagent_obs_size: 10  # 观测维度
+  fagent_act_dim: 8  # 动作空间大小
+  
+  
+  onehot: False
+  
+  large_timescale: False
+
+  obj: "all"
+  obj_type: "exp"

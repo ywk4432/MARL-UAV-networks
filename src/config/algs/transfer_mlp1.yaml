@@ -1,0 +1,82 @@
+# --- QMIX-RICM specific parameters ---
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 6000000
+
+run: "transfer"
+runner: "transfer"
+batch_size_run: 8 # 并行批次
+buffer_size: 8000
+batch_size: 128
+# batch_size: 64
+
+t_max: 8000000
+test_interval: 10000
+test_interval_inc: 0
+max_test_interval: 500000
+
+# update the target network every {} episodes
+target_update_interval: 200
+
+# use the Q_Learner to train
+mac: "n_mac"
+agent: "transfer_mlp1"
+n_agents: 1
+agent_output_type: q
+img_output_dim: 16  # channel_num * 4
+# cat_input_dim: 183 # cat_output_dim + vector_size + n_actions + n_agents
+hidden_dim: 32
+hypernet_embed_agent: 32
+img_conv_dim: 4
+# q_mixing_embed_dim: 16
+
+learner: "local_learner"
+hypernet_embed: 32
+lr: 0.00001 # Learning rate for agents
+td_lambda: 0. # 时序差分 Lambda 是一种用于权衡短期和长期奖励的方法。它是一个介于 0 和 1 之间的值，表示对未来奖励的重视程度。
+optimizer: 'adam'
+q_lambda: False # 表示是否使用 Q Lambda 方法。Q Lambda 是一种用于训练 Q 学习算法的技术，有助于更好地处理时序差分更新。
+
+use_cuda: False
+
+# rnn layer normalization
+use_layer_norm: False
+
+# orthogonal init for DNN
+use_orthogonal: False
+gain: 0.01
+
+# 是否给无人机输入全局state
+use_state: True
+
+# Priority experience replay
+use_per: False
+per_alpha: 0.6
+per_beta: 0.4
+return_priority: False
+
+n_td: True
+n_step: 1
+gamma: 0.6
+
+buffer_save: False
+buffer_load: False
+buffer_id: 0
+model_save: True
+model_type: "default"
+# model_type: "ue"
+# model_type: "energy"
+# model_type: "illegal"
+model_load: False
+suboptimal_agents_name: [ "ue.pth", "energy.pth", "illegal.pth" ]
+suboptimal_agents_num: 3
+save_interval: 10000
+run_id: "default"
+use_onehot: True
+use_novelty: False
+
+
+name: "one_cluster_env=td(0)_local_learner"

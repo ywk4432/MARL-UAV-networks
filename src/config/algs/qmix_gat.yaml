@@ -1,0 +1,48 @@
+name: "qmix_gat"
+runner: "gat"
+mac: "gat_mac"
+agent: "gat_rnn"
+learner: "q_learner"
+mixer: "qmix"
+run_id: "default_qmix_gat_run_id"
+
+# --- marl options ---
+buffer_size: 5000
+t_max: 8000000
+target_update_interval: 200
+use_state: False
+obs_last_action: False
+obs_agent_id: False
+use_novelty: True
+use_hybrid_novelty: True
+# Priority experience replay
+use_per: False
+per_alpha: 0.6
+per_beta: 0.4
+return_priority: False
+
+# --- Agent parameters ---
+gat_embed_dim: 32
+gat_hidden_dim: 64
+gat_head_num: 4
+use_layer_norm: False
+use_orthogonal: False
+gain: 0.01
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 6000000
+
+# --- learn parameters ---
+test_interval: 10000
+batch_size: 64
+batch_size_run: 8 # 并行批次
+agent_output_type: q
+mixing_embed_dim: 32
+hypernet_embed: 64
+lr: 0.001 # Learning rate for agents
+optimizer: 'adam'
+q_lambda: False # 表示是否使用 Q Lambda 方法。Q Lambda 是一种用于训练 Q 学习算法的技术，有助于更好地处理时序差分更新。
+td_lambda: 0.6 # 时序差分 Lambda 是一种用于权衡短期和长期奖励的方法。它是一个介于 0 和 1 之间的值，表示对未来奖励的重视程度。

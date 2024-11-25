@@ -1,0 +1,57 @@
+name: "multi_object"
+expert_num: 3
+agent_type: "expert"  # expert, preference, high
+agent_id: 0
+local_results_path: "results/multi_object"
+preference_d: 4
+
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 500000
+
+run: "multi_object"
+runner: "multi_object"
+buffer_size: 8000
+batch_size: 128
+# batch_size: 64
+
+t_max: 1000000
+test_interval: 10000
+test_interval_inc: 0
+max_test_interval: 500000
+
+save_model: True
+save_model_interval: 100000
+
+# update the target network every {} episodes
+target_update_interval: 200
+
+mac: "n_mac"
+agent: "transfer_mlp1"
+high_agent: "mlp"
+agent_output_type: q
+hidden_dim: 32
+hypernet_embed_agent: 32
+
+learner: "local_learner"
+hypernet_embed: 32
+lr: 1.0e-3 # Learning rate for agents
+td_lambda: 0.6 # 时序差分 Lambda 是一种用于权衡短期和长期奖励的方法。它是一个介于 0 和 1 之间的值，表示对未来奖励的重视程度。
+optimizer: 'adam'
+q_lambda: False # 表示是否使用 Q Lambda 方法。Q Lambda 是一种用于训练 Q 学习算法的技术，有助于更好地处理时序差分更新。
+
+use_cuda: False
+use_state: True
+
+# Priority experience replay
+use_per: True
+per_alpha: 0.6
+per_beta: 0.4
+return_priority: True
+
+n_td: False
+n_step: 1
+gamma: 0.6

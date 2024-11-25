@@ -1,0 +1,87 @@
+# 这是一个 yaml 配置文件，存储环境的配置参数
+# 参考教程：https://zhuanlan.zhihu.com/p/145173920
+
+env: formation
+
+env_args:
+  algo_name: "DMTD_v2"  # 算法名称
+  env_name: "UAV Formation system"  # 环境名称  三条窄通道
+  map_name: "formation_sub2"
+  luav_num: 1
+  fuav_num: 13
+  map_length: 50 # 地图长度
+  map_width: 20  # 地图宽度
+  luav_connect_dis: 6
+  slot_step_num: 15 # 时隙长度（大时间尺度的slot有多少个step）
+  max_ue_num_in_a_cell: 3
+  episode_limit: 10
+
+  seed: 10  # 随机种子，置0则不设置随机种子
+  train_rounds: 10  # 训练的回合数
+  train_round_eps: 10000  # 每个训练回合的训练次数
+  test_eps: 30  # 测试的回合数
+
+  ue_num: 50
+  ue_cluster_center_list: [ [ [ 42,10 ], 2, 7 ] ]
+  target_pos_list: [ ]
+  obstacle_list: [
+    [ [ 15,0 ],20,2 ],
+    [ [ 15,6 ],20,2 ],
+    [ [ 15,12 ],20,2 ],
+    [ [ 15,18 ],20,2 ],
+  ]
+  luav_init_pos_list: [ [ 7, 10, 2 ] ]
+  fuav_init_pos_list: [
+    [ 4,4 ],[ 4,0 ],[ 4,-4 ],
+    [ 2,2 ],[ 2,-2 ],
+    [ 0,4 ],[ 0,0 ],[ 0,-4 ],
+    [ -2,2 ],[ -2,-2 ],
+    [ -4,4 ],[ -4,0 ],[ -4,-4 ]
+  ]
+
+  luav_observation_size: 5
+  fuav_observation_size: 1
+  fuav_nei_dis: 1
+
+  uav_init_energy: 100.0
+  luav_init_energy: 150.0
+  FUAV_mecost: 0.5
+  LUAV_mecost: 1.5
+
+  # 领航无人机
+  lagent_state_size: 10  # 状态维度
+  lagent_obs_size: 10  # 观测维度
+  lagent_act_dim: 0  # 动作空间大小
+
+  # 跟随无人机
+  fagent_state_size: 10  # 状态维度
+  fagent_obs_size: 10  # 观测维度
+  fagent_act_dim: 8  # 动作空间大小
+
+  fuav_acts: [ # 离散角度
+    0.0,
+    0.7853981633974483,   # pi / 4
+    1.5707963267948966,   # pi / 2
+    2.356194490192345,    # 3pi / 4
+    3.141592653589793,    # pi
+    3.9269908169872414,   # 5pi / 4
+    4.71238898038469,     # 3pi / 2
+    5.497787143782138,    # 7pi / 4
+    6.283185307179586,    # 2pi
+  ]
+  fuav_act_dim: 9
+  alts: [ 0, 1, 2, 3, 4 ]
+  dis: [ 0,1,2,3,4,5 ]
+  dir: [ # 离散角度
+    0.0,
+    0.7853981633974483,   # pi / 4
+    1.5707963267948966,   # pi / 2
+    2.356194490192345,    # 3pi / 4
+    3.141592653589793,    # pi
+    3.9269908169872414,   # 5pi / 4
+    4.71238898038469,     # 3pi / 2
+    5.497787143782138,    # 7pi / 4
+  ]
+  onehot: False
+  safe_dis: 2
+  large_timescale: False

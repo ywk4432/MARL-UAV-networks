@@ -1,0 +1,92 @@
+# --- QMIX-RICM specific parameters ---
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 100000
+
+run: "TPRA"
+runner: "TPRA"
+# batch_size_run: 1 # 并行批次
+buffer_size: 5000
+# batch_size: 128
+
+optimizer: 'adam'
+train_times: 6
+
+t_max: 1000000
+
+# update the target network every {} episodes
+target_update_interval: 200
+
+obj: "kl"
+obj_type: "exp"
+
+# leader agent
+l_args:
+  name: "tp"
+  batch_size: 1
+  mac: "pointer_mac"
+  agent: "pointer"
+  agent_output_type: "pi_logits"
+  learner: "pointer_learner"
+  mixer: "local"
+  # mixing_embed_dim: 32
+  # hypernet_embed: 64
+  lr: 0.001
+  optimizer: 'adam'
+  use_state: False
+  td_lambda: 0.6
+  hidden_size: 128
+  
+
+# follower agent
+f_args:
+  name: "ra"
+  batch_size: 64
+  mac: "n_mac"
+  agent: "n_rnn"
+  agent_output_type: q
+  learner: "q_learner"
+  mixer: "local"
+  mixing_embed_dim: 32
+  hypernet_embed: 64
+  lr: 0.0001 # Learning rate for agents
+  td_lambda: 0.6 # 时序差分 Lambda 是一种用于权衡短期和长期奖励的方法。它是一个介于 0 和 1 之间的值，表示对未来奖励的重视程度。
+  optimizer: 'adam'
+  q_lambda: False # 表示是否使用 Q Lambda 方法。Q Lambda 是一种用于训练 Q 学习算法的技术，有助于更好地处理时序差分更新。
+  n_td: True
+  n_step: 1
+  gamma: 0.6
+  use_state: False
+
+# rnn layer normalization
+use_layer_norm: False
+
+# orthogonal init for DNN
+use_orthogonal: False
+gain: 0.01
+
+# Priority experience replay
+use_per: False
+per_alpha: 0.6
+per_beta: 0.4
+return_priority: False
+
+n_td: False
+n_step: 1
+gamma: 0.6
+
+env_args:
+  slot_step_num: 2 # 时隙长度（大时间尺度的slot有多少个frame）
+  episode_limit: 20
+  updata_fn: "new"
+
+seed: 1024
+agent_output_type: q
+# slot_step_num: 10  # 时隙长度（大时间尺度的slot有多少个step）
+# mixer: "vdn"
+run_id: "default"
+
+name: "tpra_env=two_timescale"

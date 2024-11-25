@@ -1,0 +1,67 @@
+# --- QMIX-RICM specific parameters ---
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 300000
+
+run: "large_timescale_per"
+runner: "large_timescale"
+batch_size_run: 8 # 并行批次
+buffer_size: 5000
+# batch_size: 128
+
+optimizer: 'adam'
+train_times: 8
+
+t_max: 1000000
+
+# luav_act_list: [33, 33, 33, 33, 33, 33, 33, 0, 0, 0]
+luav_act_list: [ 33, 17, 9, 33, 16, 24, 33, 17, 9, 18, 10, 9, 0, 0, 0 ]
+
+# update the target network every {} episodes
+target_update_interval: 200
+
+l_args:
+  name: "luav"
+  batch_size: 64
+  mac: "n_mac"
+  agent: "n_rnn"
+  agent_output_type: q
+  learner: "q_learner"
+  mixer: "local"
+  mixing_embed_dim: 32
+  hypernet_embed: 64
+  lr: 0.001
+  optimizer: 'adam'
+  use_state: False
+  td_lambda: 0.6 # 时序差分 Lambda 是一种用于权衡短期和长期奖励的方法。它是一个介于 0 和 1 之间的值，表示对未来奖励的重视程度。
+
+optimizer: 'adam'
+q_lambda: False # 表示是否使用 Q Lambda 方法。Q Lambda 是一种用于训练 Q 学习算法的技术，有助于更好地处理时序差分更新。
+n_td: False
+n_step: 1
+gamma: 0.6
+use_state: False
+
+# rnn layer normalization
+use_layer_norm: False
+
+# orthogonal init for DNN
+use_orthogonal: False
+gain: 0.01
+
+# obs_agent_id: False
+# obs_last_action: False
+
+# Priority experience replay
+use_per: False
+per_alpha: 0.6
+per_beta: 0.4
+return_priority: False
+
+agent_output_type: q
+run_id: "large_timescall_per"
+
+name: "formation_env=large_timescall_per"

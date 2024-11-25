@@ -1,0 +1,63 @@
+# 这是一个 yaml 配置文件，存储环境的配置参数
+# 参考教程：https://zhuanlan.zhihu.com/p/145173920
+env: cluster
+
+env_args:
+
+  # 环境参数
+  # env_name: ue_cluster
+  map_name: "one_cluster"
+  slot_num: 100
+  slot_length: 5.0
+  uav_num: 1
+  map_length: 15
+  map_width: 15
+  map_height: 5
+  state_size: 5  # 状态的维度数目 3*uav_num + 2*cluster_num
+  penalty: -5  # 无人机非法动作的惩罚项
+  channel_num: 4  # 观测的通道数
+  specify_ue_pos: True
+  ue_pos_file: "src/envs/env_1/ue_pos_config/ue_pos_one_cluster.csv"
+  ue_cluster_file: "src/envs/env_1/cluster_config/one_cluster_center.csv"
+  obs_list_file: "src/envs/env_1/obstacle_config/obs_list.csv"
+  max_novelty_reward: 5
+  use_onehot: True  # 在向量观测 / 状态中使用 OneHot 编码
+  use_novelty: False  # 在奖励函数中包含 Novelty 项
+
+  # UE 参数
+  ue:
+    cluster_num: 1
+    num_in_a_cluster: 72
+    max_cluster_size: 6
+    cluster_cover_threshold: 0.4
+    specify_cluster_centers: False
+    cluster_centers:
+
+  # UAV 参数
+  uav:
+    obs_radius: [ 1.0, 1.0, 2.0, 1.0, 1.0 ]
+    cover_radius: [ 1.0, 1.5, 2.0, 1.5, 1.0 ]
+    action_space:
+      - [ # 离散角度
+        0.0,
+        0.7853981633974483,   # pi / 4
+        1.5707963267948966,   # pi / 2
+        2.356194490192345,    # 3pi / 4
+        3.141592653589793,    # pi
+        3.9269908169872414,   # 5pi / 4
+        4.71238898038469,     # 3pi / 2
+        5.497787143782138     # 7pi / 4
+      ]
+      - [ 0, 1 ]           # 离散水平位移
+      - [ -1, 0, 1 ]            # 离散垂直位移
+    horizon_speed: 1.0
+    vertical_speed: 1.0
+    max_energy: 100
+    max_serve_capacity: 32
+    epsilon: [ 0.6, 0.7, 0.3, 0.1, 0.01 ]  # 能量相关的超参数
+    action_size: 27  # 动作空间大小
+    max_obs_radius: 2
+    obs_radius_change: False # 无人机的观测半径是否随高度变化
+    specify_initial_pos: True
+    initial_pos:
+      - [ 2, 2, 1 ]
